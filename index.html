@@ -52,6 +52,19 @@
     100%{opacity:0;transform:scale(1.35) translateY(-40px)}
   }
 
+  /* ===== penalty float ===== */
+  .penaltyFloat{position:fixed;left:50%;top:46%;z-index:70;pointer-events:none;
+    font-size:clamp(2.4rem,8vw,3.6rem);font-weight:900;color:#f87171;opacity:0;
+    text-shadow:0 6px 24px rgba(0,0,0,.85),0 0 30px rgba(220,38,38,.55);
+    transform:translate(-50%,-50%);white-space:nowrap}
+  .penaltyFloat.show{animation:penaltyFly 1.1s cubic-bezier(.2,.9,.3,1) forwards}
+  @keyframes penaltyFly{
+    0%{opacity:0;transform:translate(-50%,-50%) scale(.4) rotate(-8deg)}
+    25%{opacity:1;transform:translate(-50%,-50%) scale(1.2) rotate(4deg)}
+    55%{opacity:1;transform:translate(-50%,-80%) scale(1) rotate(-2deg)}
+    100%{opacity:0;transform:translate(-50%,-180%) scale(.9) rotate(0)}
+  }
+
   .toast{position:fixed;left:50%;bottom:40px;transform:translate(-50%, 100px);
     background:#1e293b;color:#4ade80;padding:14px 28px;border-radius:12px;
     border:1px solid #4ade80;font-weight:700;font-size:1rem;z-index:9999;
@@ -107,11 +120,31 @@
 
   /* ===== HOME HUB ===== */
   .profileChip{display:inline-flex;align-items:center;gap:10px;background:rgba(30,41,59,.85);
-    border:1px solid #334155;border-radius:999px;padding:8px 18px 8px 12px;margin:0 auto 18px;
-    font-size:.95rem;color:#cbd5e1}
-  .profileChip span:first-child{font-size:1.6rem;line-height:1}
+    border:1px solid #334155;border-radius:999px;padding:8px 18px 8px 12px;
+    font-size:.95rem;color:#cbd5e1;flex-wrap:wrap;justify-content:center}
+  .profileChip .chipAvatar{font-size:1.6rem;line-height:1}
   .profileChip b{color:#93c5fd}
-  .homeHeadWrap{text-align:center}
+  .homeHeadWrap{text-align:center;margin-bottom:20px}
+
+  .histPoints{display:inline-flex;align-items:center;gap:6px;
+    background:linear-gradient(135deg,rgba(251,191,36,.2),rgba(245,158,11,.15));
+    border:1px solid rgba(251,191,36,.4);color:#fbbf24;
+    padding:3px 12px;border-radius:999px;font-weight:800;font-size:.85rem;
+    font-variant-numeric:tabular-nums;white-space:nowrap;transition:transform .2s}
+  .histPoints.bump{animation:histBump .6s ease}
+  @keyframes histBump{
+    0%{transform:scale(1)}
+    40%{transform:scale(1.18);border-color:#fbbf24;
+        box-shadow:0 0 22px rgba(251,191,36,.75);color:#fde68a}
+    100%{transform:scale(1)}
+  }
+  .histPoints.penalty{animation:histPenalty .7s ease}
+  @keyframes histPenalty{
+    0%{transform:scale(1)}
+    40%{transform:scale(1.15);border-color:#dc2626;color:#fca5a5;
+        box-shadow:0 0 20px rgba(220,38,38,.7);background:rgba(220,38,38,.18)}
+    100%{transform:scale(1)}
+  }
 
   .counterRow{display:flex;gap:12px;justify-content:center;margin:0 auto 26px;flex-wrap:wrap}
   .counterBox{display:flex;align-items:center;gap:12px;background:rgba(30,41,59,.85);
@@ -141,13 +174,27 @@
     overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 
   header{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-bottom:10px}
-  .player{font-size:.95rem;color:#cbd5e1;display:flex;align-items:center;gap:6px}
+  .player{font-size:.95rem;color:#cbd5e1;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
   .player b{color:#93c5fd}
   #playerAvatar{font-size:1.5rem;line-height:1}
+  .histPointsSmall{display:inline-flex;align-items:center;gap:5px;
+    background:linear-gradient(135deg,rgba(251,191,36,.2),rgba(245,158,11,.12));
+    border:1px solid rgba(251,191,36,.4);color:#fbbf24;
+    padding:3px 10px;border-radius:999px;font-weight:800;font-size:.78rem;
+    font-variant-numeric:tabular-nums;white-space:nowrap;transition:transform .2s}
+  .histPointsSmall.bump{animation:histBump .6s ease}
+  .histPointsSmall.penalty{animation:histPenalty .7s ease}
+
   .stats{display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:.82rem}
   .pill{background:#1e293b;border:1px solid #334155;padding:5px 12px;border-radius:999px;white-space:nowrap}
   .pill.bump{animation:bump .45s ease}
   @keyframes bump{0%{transform:scale(1)}40%{transform:scale(1.22);background:#1d4ed8}100%{transform:scale(1)}}
+  .pill.penalty{animation:penaltyDrop .7s ease}
+  @keyframes penaltyDrop{
+    0%{transform:scale(1)}
+    30%{transform:scale(1.18);background:#991b1b;border-color:#dc2626;color:#fecaca}
+    100%{transform:scale(1)}
+  }
   .pill.hot{background:#7c2d12;border-color:#ea580c;color:#fed7aa;animation:flame 1s ease-in-out infinite}
   @keyframes flame{0%,100%{box-shadow:0 0 0 0 rgba(234,88,12,.6)}50%{box-shadow:0 0 0 8px rgba(234,88,12,0)}}
   .toggle{display:flex;align-items:center;gap:6px;color:#94a3b8;cursor:pointer;user-select:none}
@@ -245,7 +292,10 @@
     -webkit-background-clip:text;background-clip:text;color:transparent;
     -webkit-text-fill-color:transparent}
   .achName{font-size:1.4rem;font-weight:800;color:#93c5fd;margin:8px 0 4px}
-  .achStats{font-size:.95rem;color:#cbd5e1;margin:6px 0 24px}
+  .achStats{font-size:.95rem;color:#cbd5e1;margin:6px 0 8px}
+  .achHistLine{font-size:1rem;color:#fbbf24;font-weight:800;margin:0 0 22px;
+    font-variant-numeric:tabular-nums}
+  .achHistLine b{color:#fde68a;font-size:1.2rem}
   .achButtons{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:8px}
 
   .end{text-align:center;padding:30px 16px}
@@ -254,6 +304,9 @@
   .big{font-size:2.8rem;font-weight:900;color:#4ade80;margin:10px 0 6px;letter-spacing:-.02em}
   .end p{color:#94a3b8}
   #endAvatar{font-size:3.4rem;line-height:1;margin:6px 0}
+  #endHistLine{font-size:1.05rem;color:#fbbf24;font-weight:800;
+    margin:0 0 10px;font-variant-numeric:tabular-nums}
+  #endHistLine b{color:#fde68a;font-size:1.3rem}
   .endBtns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:22px}
 
   @media (max-width:520px){
@@ -268,6 +321,7 @@
     .achCard h2{font-size:1.5rem}
     .counterBox{min-width:150px;padding:10px 16px}
     .counterNum{font-size:1.15rem}
+    .histPointsSmall{font-size:.7rem;padding:2px 8px}
   }
   @media (prefers-reduced-motion:reduce){
     *{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
@@ -279,11 +333,12 @@
 <div id="errBanner"></div>
 <canvas id="confetti" aria-hidden="true"></canvas>
 <div id="reaction" class="reaction" aria-hidden="true"></div>
+<div id="penaltyFloat" class="penaltyFloat" aria-hidden="true"></div>
 <div class="blobs" aria-hidden="true"><span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span></div>
 
 <main class="app">
 
-  <!-- ============ 1. NAME ENTRY ============ -->
+  <!-- 1. NAME ENTRY -->
   <section id="startScreen" class="screen">
     <div class="logo">🏁</div>
     <h1>Sentence Race</h1>
@@ -312,7 +367,7 @@
     </div>
   </section>
 
-  <!-- ============ 2. AVATAR PICKER ============ -->
+  <!-- 2. AVATAR PICKER -->
   <section id="avatarScreen" class="screen hidden">
     <h2>Pick your avatar</h2>
     <p class="sub">Choose a character to play with.</p>
@@ -322,12 +377,13 @@
     </div>
   </section>
 
-  <!-- ============ 3. HOME HUB ============ -->
+  <!-- 3. HOME HUB -->
   <section id="homeScreen" class="screen hidden">
     <div class="homeHeadWrap">
       <div class="profileChip">
-        <span id="homeAvatar">🦊</span>
+        <span class="chipAvatar" id="homeAvatar">🦊</span>
         <span>Welcome, <b id="homeName">Player</b></span>
+        <span class="histPoints" id="homeHistPill">⭐ <span id="homeHistPoints">0</span> pts</span>
       </div>
     </div>
 
@@ -354,7 +410,7 @@
     <div class="sectionGrid" id="sectionGrid"></div>
   </section>
 
-  <!-- ============ 4. GAME ============ -->
+  <!-- 4. GAME -->
   <section id="gameScreen" class="screen hidden">
     <div class="navBar">
       <button class="btn ghost" id="homeBtn" type="button">🏠 Home</button>
@@ -363,7 +419,11 @@
     </div>
 
     <header>
-      <span class="player"><span id="playerAvatar">🦊</span> <b id="playerName">—</b></span>
+      <span class="player">
+        <span id="playerAvatar">🦊</span>
+        <b id="playerName">—</b>
+        <span class="histPointsSmall" id="gameHistPill">⭐ <span id="gameHistPoints">0</span></span>
+      </span>
       <div class="stats">
         <span class="pill" id="roundLabel">Level 1 • 1/30</span>
         <span class="pill" id="scoreLabel">0 pts</span>
@@ -405,7 +465,7 @@
     <p class="feedback" id="feedback" aria-live="polite"></p>
   </section>
 
-  <!-- ============ 5. ACHIEVEMENT ============ -->
+  <!-- 5. ACHIEVEMENT -->
   <section id="achieveScreen" class="screen hidden">
     <div class="achCard">
       <div class="achTrophy">🏆</div>
@@ -413,6 +473,7 @@
       <h2 id="achTitle">Level 1 Complete!</h2>
       <p class="achName" id="achName">Player</p>
       <p class="achStats" id="achStats">Score: 0 pts</p>
+      <p class="achHistLine">⭐ Lifetime: <b id="achHistPoints">0</b> pts</p>
       <div class="achButtons">
         <button class="btn" id="captureBtn" type="button">📸 Capture</button>
         <button class="btn" id="achShareBtn" type="button">🔗 Share</button>
@@ -424,12 +485,13 @@
     </div>
   </section>
 
-  <!-- ============ 6. END ============ -->
+  <!-- 6. END -->
   <section id="endScreen" class="screen end hidden">
     <div class="trophy">🏆</div>
     <div id="endAvatar">🦊</div>
     <h2 id="endTitle">All done!</h2>
     <p class="big" id="finalScore">0 points</p>
+    <p id="endHistLine">⭐ Lifetime: <b id="endHistPoints">0</b> pts</p>
     <p id="finalMsg"></p>
     <div class="endBtns">
       <button class="btn primary" id="againBtn" type="button">Play again 🔁</button>
@@ -562,7 +624,6 @@
     ["🪥","Say what you do each morning.","I brush my teeth every day"]
   ];
 
-  /* ---------- 100 description items (2 words) ---------- */
   var DESC_BANK = [
     ["🐶","Big dog"],["🐱","Small cat"],["🚗","Red car"],["🌳","Tall tree"],
     ["👶","Happy baby"],["🏠","Blue house"],["☀️","Hot sun"],["🧊","Cold ice"],
@@ -591,7 +652,6 @@
     ["🖊️","Blue pen"],["🐌","Slow snail"],["🦔","Small hedgehog"],["🐿️","Fast squirrel"]
   ];
 
-  /* ---------- Pronouns — 52 three-word sentences ---------- */
   var PRONOUN_BANK = [
     ["😊","Use I — say how you feel.","I am happy"],
     ["😢","Use I — say how you feel.","I am sad"],
@@ -669,7 +729,7 @@
     "log window door sofa mirror watch phone laptop camera guitar drum trumpet painting pen snail " +
     "hedgehog squirrel chicken cow pig sheep goat duck owl eagle snake turtle lion mouse bear " +
     "rabbit frog butterfly donut cookie chocolate grapes strawberry orange carrot broccoli corn " +
-    "cheese milk coffee"), "noun");
+    "cheese coffee"), "noun");
   setType(("big small soft black white red blue green brown pink hot cold warm happy sad tired " +
     "funny hungry thirsty ready tall short kind cute round many two three some every very high " +
     "fast well now today good nice strong smart here " +
@@ -701,29 +761,15 @@
 
   var AVATARS = ["🦊","🐼","🐸","🦁","🐯","🐨","🐵","🐧","🦄","🐙","🦖","🐝"];
   var ROUND_SECONDS = 45;
+  var PENALTY = 5;                 /* points lost on a wrong answer */
 
   /* =========================================================
      3. SECTIONS
      ========================================================= */
   var SECTIONS = {
-    race: {
-      label: "Sentence Race",
-      icon: "🔤",
-      desc: "4 levels • 60 rounds<br>Sentences from 3 to 6 words",
-      build: buildRaceLevels
-    },
-    desc: {
-      label: "Description",
-      icon: "🎨",
-      desc: "5 sets • 100 pictures<br>Describe in exactly 2 words",
-      build: buildDescriptionLevels
-    },
-    pronouns: {
-      label: "Pronouns",
-      icon: "👤",
-      desc: "2 sets • 40 sentences<br>I, you, he, she, it, we, they",
-      build: buildPronounLevels
-    }
+    race:     { label: "Sentence Race", icon: "🔤", desc: "4 levels • 60 rounds<br>Sentences from 3 to 6 words", build: buildRaceLevels },
+    desc:     { label: "Description",   icon: "🎨", desc: "5 sets • 100 pictures<br>Describe in exactly 2 words", build: buildDescriptionLevels },
+    pronouns: { label: "Pronouns",      icon: "👤", desc: "2 sets • 40 sentences<br>I, you, he, she, it, we, they", build: buildPronounLevels }
   };
 
   /* =========================================================
@@ -782,6 +828,7 @@
   var continueBtn = byId("continueBtn");
 
   var reactionEl  = byId("reaction");
+  var penaltyEl   = byId("penaltyFloat");
   var confCanvas  = byId("confetti");
   var confCtx     = confCanvas.getContext("2d");
 
@@ -799,6 +846,7 @@
   var gameLevels = [];
   var levelIdx = 0, roundIdx = 0;
   var score = 0, streak = 0, best = 0;
+  var historicalPoints = 0;
   var current = null, pool = [], placed = [], locked = false;
   var timerId = null, timeLeft = 0;
   var soundOn = true;
@@ -807,7 +855,58 @@
   var pendingSection = null;
 
   /* =========================================================
-     6. SPEECH
+     6. HISTORICAL POINTS (persisted in localStorage)
+     ========================================================= */
+  function loadHistorical(){
+    try { historicalPoints = parseInt(localStorage.getItem("sr_historical_points") || "0", 10) || 0; }
+    catch (e) { historicalPoints = 0; }
+  }
+
+  function awardHistorical(pts){
+    historicalPoints += pts;
+    try { localStorage.setItem("sr_historical_points", String(historicalPoints)); }
+    catch (e) {}
+    updateHistDisplays(true, false);
+  }
+
+  function deductHistorical(pts){
+    historicalPoints = Math.max(0, historicalPoints - pts);
+    try { localStorage.setItem("sr_historical_points", String(historicalPoints)); }
+    catch (e) {}
+    updateHistDisplays(true, true);
+  }
+
+  function updateHistDisplays(animate, isPenalty){
+    var fmt = historicalPoints.toLocaleString();
+    var cls = isPenalty ? "penalty" : "bump";
+
+    var hh = byId("homeHistPoints");
+    var hp = byId("homeHistPill");
+    if (hh) hh.textContent = fmt;
+    if (hp && animate){
+      hp.classList.remove("bump", "penalty");
+      void hp.offsetWidth;
+      hp.classList.add(cls);
+    }
+
+    var gh = byId("gameHistPoints");
+    var gp = byId("gameHistPill");
+    if (gh) gh.textContent = fmt;
+    if (gp && animate){
+      gp.classList.remove("bump", "penalty");
+      void gp.offsetWidth;
+      gp.classList.add(cls);
+    }
+
+    var ah = byId("achHistPoints");
+    if (ah) ah.textContent = fmt;
+
+    var eh = byId("endHistPoints");
+    if (eh) eh.textContent = fmt;
+  }
+
+  /* =========================================================
+     7. SPEECH
      ========================================================= */
   var voices = [];
   var speechOK = false;
@@ -848,9 +947,7 @@
       var u = new SpeechSynthesisUtterance(text);
       var v = pickVoice();
       if (v){ u.voice = v; u.lang = v.lang; } else { u.lang = "en-US"; }
-      u.rate = rate || 0.9;
-      u.pitch = 1.05;
-      u.volume = 1;
+      u.rate = rate || 0.9; u.pitch = 1.05; u.volume = 1;
       window.speechSynthesis.speak(u);
     } catch (e) {}
   }
@@ -861,14 +958,13 @@
   function unlockSpeech(){
     if (!speechOK) return;
     try {
-      var u = new SpeechSynthesisUtterance(" ");
-      u.volume = 0;
+      var u = new SpeechSynthesisUtterance(" "); u.volume = 0;
       window.speechSynthesis.speak(u);
     } catch (e) {}
   }
 
   /* =========================================================
-     7. SOUND EFFECTS
+     8. SOUND EFFECTS
      ========================================================= */
   var actx = null;
   function audioCtx(){
@@ -883,12 +979,10 @@
   }
   function beep(freq, dur, type, vol, delay){
     if (!soundOn) return;
-    var ac = audioCtx();
-    if (!ac) return;
+    var ac = audioCtx(); if (!ac) return;
     try {
       var t0 = ac.currentTime + (delay || 0);
-      var osc = ac.createOscillator();
-      var g = ac.createGain();
+      var osc = ac.createOscillator(); var g = ac.createGain();
       osc.type = type || "sine";
       osc.frequency.setValueAtTime(freq, t0);
       g.gain.setValueAtTime(0.0001, t0);
@@ -919,7 +1013,7 @@
   }
 
   /* =========================================================
-     8. CONFETTI + SHAPES
+     9. CONFETTI + SHAPES
      ========================================================= */
   var parts = [], raf = null;
   function sizeCanvas(){
@@ -999,7 +1093,7 @@
   }
 
   /* =========================================================
-     9. REACTION + TOAST
+     10. REACTION + PENALTY FLOAT + TOAST
      ========================================================= */
   function react(emoji){
     reactionEl.classList.remove("show");
@@ -1007,6 +1101,15 @@
     reactionEl.textContent = emoji;
     reactionEl.classList.add("show");
   }
+
+  function showPenaltyFloat(pts){
+    if (!penaltyEl) return;
+    penaltyEl.textContent = "−" + pts + " pts";
+    penaltyEl.classList.remove("show");
+    void penaltyEl.offsetWidth;
+    penaltyEl.classList.add("show");
+  }
+
   function showToast(msg){
     var t = document.createElement("div");
     t.className = "toast";
@@ -1018,7 +1121,7 @@
   }
 
   /* =========================================================
-     10. HELPERS
+     11. HELPERS
      ========================================================= */
   function norm(w){ return String(w).toLowerCase().replace(/[.,!?]/g, ""); }
   function shuffle(a){
@@ -1034,7 +1137,7 @@
     if (streak >= 2) streakLabel.classList.add("hot");
     else streakLabel.classList.remove("hot");
     if (bump){
-      scoreLabel.classList.remove("bump");
+      scoreLabel.classList.remove("bump", "penalty");
       void scoreLabel.offsetWidth;
       scoreLabel.classList.add("bump");
     }
@@ -1065,7 +1168,7 @@
   }
 
   /* =========================================================
-     11. LEVEL BUILDERS
+     12. LEVEL BUILDERS
      ========================================================= */
   function buildRaceLevels(){
     var cfgList = [
@@ -1080,12 +1183,7 @@
         var answerWords = row[2].split(" ");
         return { emoji: row[0], hint: row[1], answer: answerWords, decoys: pickDecoys(answerWords) };
       });
-      return {
-        levelName: "Level " + (i + 1),
-        tierName: cfg.name,
-        tierClass: "tier-" + cfg.tier,
-        rounds: rounds
-      };
+      return { levelName: "Level " + (i + 1), tierName: cfg.name, tierClass: "tier-" + cfg.tier, rounds: rounds };
     });
   }
 
@@ -1099,18 +1197,11 @@
       var rounds = chunk.map(function(item){
         var answerWords = item[1].split(" ");
         return {
-          emoji: item[0],
-          hint: "Describe the picture in two words.",
-          answer: answerWords,
-          decoys: pickDescDecoys(answerWords)
+          emoji: item[0], hint: "Describe the picture in two words.",
+          answer: answerWords, decoys: pickDescDecoys(answerWords)
         };
       });
-      levels.push({
-        levelName: "Set " + (s + 1),
-        tierName: "2 words",
-        tierClass: "tier-desc",
-        rounds: rounds
-      });
+      levels.push({ levelName: "Set " + (s + 1), tierName: "2 words", tierClass: "tier-desc", rounds: rounds });
     }
     return levels;
   }
@@ -1123,25 +1214,15 @@
       var chunk = shuffled.slice(s * perSet, (s + 1) * perSet);
       var rounds = chunk.map(function(row){
         var answerWords = row[2].split(" ");
-        return {
-          emoji: row[0],
-          hint: row[1],
-          answer: answerWords,
-          decoys: pickPronounDecoys(answerWords)
-        };
+        return { emoji: row[0], hint: row[1], answer: answerWords, decoys: pickPronounDecoys(answerWords) };
       });
-      levels.push({
-        levelName: "Set " + (s + 1),
-        tierName: "Pronouns",
-        tierClass: "tier-pronoun",
-        rounds: rounds
-      });
+      levels.push({ levelName: "Set " + (s + 1), tierName: "Pronouns", tierClass: "tier-pronoun", rounds: rounds });
     }
     return levels;
   }
 
   /* =========================================================
-     12. RENDER
+     13. RENDER
      ========================================================= */
   function cardEl(card, onMat, index){
     var btn = document.createElement("button");
@@ -1189,7 +1270,7 @@
   }
 
   /* =========================================================
-     13. ACTIONS
+     14. ACTIONS
      ========================================================= */
   function addCard(id){
     if (locked) return;
@@ -1252,11 +1333,13 @@
     var targetNorm  = current.answer.map(norm).join(" ");
 
     if (attemptNorm === targetNorm){
+      /* ===== CORRECT — gain points ===== */
       locked = true;
       streak++;
       if (streak > best) best = streak;
       var pts = 10 + (streak - 1) * 2;
       score += pts;
+      awardHistorical(pts);
       updateStats(true);
 
       sndGood();
@@ -1285,14 +1368,26 @@
       else setTimeout(startRound, 1500);
 
     } else {
+      /* ===== WRONG — LOSE POINTS ===== */
       streak = 0;
+      score = Math.max(0, score - PENALTY);
+      deductHistorical(PENALTY);
+
       updateStats(false);
+      /* flash the score pill in red */
+      scoreLabel.classList.remove("bump", "penalty");
+      void scoreLabel.offsetWidth;
+      scoreLabel.classList.add("penalty");
+
+      /* floating −N pts */
+      showPenaltyFloat(PENALTY);
+
       sndBad();
       react(["😅","🤔","😬","🙃"][(Math.random()*4)|0]);
-      speak(attempt + ". Try again.", 0.85);
+      speak(attempt + ". That is wrong. Try again.", 0.85);
 
       feedbackEl.textContent =
-        "❌ Not quite — listen again and check the word order. You must get it right to move on.";
+        "❌ Not quite!  −" + PENALTY + " pts.  Listen again and check the word order.";
       feedbackEl.className = "feedback bad";
 
       matEl.classList.remove("shake"); void matEl.offsetWidth;
@@ -1301,7 +1396,7 @@
   }
 
   /* =========================================================
-     14. ROUND / LEVEL FLOW
+     15. ROUND / LEVEL FLOW
      ========================================================= */
   function startRound(){
     stopTimer();
@@ -1336,6 +1431,7 @@
     shuffle(pool);
 
     render();
+    updateHistDisplays(false);
 
     poolEl.classList.remove("enter"); void poolEl.offsetWidth;
     poolEl.classList.add("enter");
@@ -1363,6 +1459,7 @@
     achStatsEl.textContent  = "Score: " + score + " pts   •   Stage " +
                               (levelIdx + 1) + " of " + gameLevels.length;
     continueBtn.textContent = isLast ? "🏆 See Final Results" : "Continue →";
+    updateHistDisplays(false);
 
     burstConfetti(180);
     burstShapes(30);
@@ -1384,6 +1481,7 @@
     endAvatarEl.textContent = avatar;
     endTitle.textContent = "Amazing, " + player + "!";
     finalScore.textContent = score + " points";
+    updateHistDisplays(false);
 
     var sectionLabel = SECTIONS[currentMode] ? SECTIONS[currentMode].label : "game";
     finalMsg.textContent = "You finished all " + gameLevels.length + " stages of " +
@@ -1397,7 +1495,7 @@
   }
 
   /* =========================================================
-     15. TIMER
+     16. TIMER
      ========================================================= */
   function startTimer(){
     stopTimer();
@@ -1425,7 +1523,7 @@
   }
 
   /* =========================================================
-     16. CAPTURE ACHIEVEMENT
+     17. CAPTURE ACHIEVEMENT
      ========================================================= */
   function captureAchievement(){
     var level = gameLevels[levelIdx];
@@ -1476,11 +1574,15 @@
     c.fillStyle = "#e2e8f0";
     c.fillText("Score: " + score + " points", canvas.width/2, 785);
 
-    c.font = "36px system-ui, sans-serif";
+    c.font = "bold 38px system-ui, sans-serif";
+    c.fillStyle = "#fbbf24";
+    c.fillText("⭐ Lifetime: " + historicalPoints.toLocaleString() + " pts", canvas.width/2, 845);
+
+    c.font = "32px system-ui, sans-serif";
     c.fillStyle = "#cbd5e1";
-    c.fillText("Best streak: " + best + " in a row", canvas.width/2, 850);
+    c.fillText("Best streak: " + best + " in a row", canvas.width/2, 900);
     c.fillText("Stage " + (levelIdx + 1) + " of " + gameLevels.length +
-               "  •  " + level.tierName, canvas.width/2, 905);
+               "  •  " + level.tierName, canvas.width/2, 950);
 
     c.font = "28px system-ui, sans-serif";
     c.fillStyle = "#64748b";
@@ -1513,15 +1615,12 @@
   }
   function triggerDownload(href, filename){
     var a = document.createElement("a");
-    a.href = href;
-    a.download = filename;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
+    a.href = href; a.download = filename;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
   }
 
   /* =========================================================
-     17. ROUTING / HOME / SHARE
+     18. ROUTING / HOME / SHARE
      ========================================================= */
   function showOnly(el){
     [startScreen, avatarScreen, homeScreen, gameScreen, achieveScreen, endScreen]
@@ -1529,18 +1628,15 @@
     el.classList.remove("hidden");
     try { window.scrollTo(0, 0); } catch (e) {}
   }
-
   function parseHash(){
     var h = (location.hash || "").replace(/^#/, "").toLowerCase();
     if (h && SECTIONS[h]) return h;
     return "home";
   }
-
   function setHash(section){
     try { history.replaceState(null, "", "#" + section); }
     catch (e) { location.hash = section; }
   }
-
   function showHome(){
     stopTimer();
     stopSpeech();
@@ -1548,25 +1644,21 @@
     showOnly(homeScreen);
     homeAvatar.textContent = avatar || "🦊";
     homeName.textContent = player || "Player";
+    updateHistDisplays(false);
   }
-
   function openSection(section){
     if (!SECTIONS[section]) { showHome(); return; }
     setHash(section);
     startGame(section);
   }
-
   function shareUrl(section){
     return location.href.split("#")[0] + "#" + section;
   }
-
   function fallbackCopy(text){
     try {
       var ta = document.createElement("textarea");
       ta.value = text;
-      ta.style.position = "fixed";
-      ta.style.top = "-1000px";
-      ta.style.opacity = "0";
+      ta.style.position = "fixed"; ta.style.top = "-1000px"; ta.style.opacity = "0";
       document.body.appendChild(ta);
       ta.focus(); ta.select();
       var ok = false;
@@ -1575,7 +1667,6 @@
       return ok;
     } catch (e) { return false; }
   }
-
   function copyText(text){
     if (navigator.clipboard && navigator.clipboard.writeText){
       return navigator.clipboard.writeText(text)
@@ -1584,7 +1675,6 @@
     }
     return Promise.resolve(fallbackCopy(text));
   }
-
   function doShare(section){
     var url = shareUrl(section);
     copyText(url).then(function(ok){
@@ -1596,14 +1686,13 @@
       }
     });
   }
-
   function currentSection(){
     var h = parseHash();
     return SECTIONS[h] ? h : currentMode;
   }
 
   /* =========================================================
-     18. VISITOR COUNTERS (real, via public counter API)
+     19. VISITOR COUNTERS
      ========================================================= */
   var COUNTER_NS = "sentence-race-esl-app";
   var TOTAL_KEY  = "total-visitors";
@@ -1614,9 +1703,7 @@
               (action ? "/" + action : "");
     return new Promise(function(resolve){
       var done = false;
-      var timer = setTimeout(function(){
-        if (!done){ done = true; resolve(null); }
-      }, 7000);
+      var timer = setTimeout(function(){ if (!done){ done = true; resolve(null); } }, 7000);
       try {
         fetch(url, { cache: "no-store" })
           .then(function(r){ return r.ok ? r.json() : null; })
@@ -1625,25 +1712,19 @@
             done = true; clearTimeout(timer);
             resolve(d && typeof d.count === "number" ? d.count : null);
           })
-          .catch(function(){
-            if (!done){ done = true; clearTimeout(timer); resolve(null); }
-          });
+          .catch(function(){ if (!done){ done = true; clearTimeout(timer); resolve(null); } });
       } catch (e){
         if (!done){ done = true; clearTimeout(timer); resolve(null); }
       }
     });
   }
-
   function setCounter(id, val, note){
-    var el = byId(id);
-    if (!el) return;
+    var el = byId(id); if (!el) return;
     el.textContent = (typeof val === "number") ? val.toLocaleString() : val;
     el.title = note || "";
-    el.classList.remove("bump");
-    void el.offsetWidth;
+    el.classList.remove("bump"); void el.offsetWidth;
     el.classList.add("bump");
   }
-
   function localTotal(){
     var n = 0;
     try {
@@ -1656,13 +1737,11 @@
     } catch (e) {}
     return n;
   }
-
   function refreshTotal(){
     var now = Date.now();
     var last = 0;
     try { last = parseInt(localStorage.getItem("sr_total_hit") || "0", 10) || 0; } catch (e) {}
-    var shouldHit = (now - last) > (30 * 60 * 1000); /* once per 30 min */
-
+    var shouldHit = (now - last) > (30 * 60 * 1000);
     apiCounter(TOTAL_KEY, shouldHit ? "up" : null).then(function(n){
       if (n !== null){
         if (shouldHit){
@@ -1674,16 +1753,13 @@
       }
     });
   }
-
   function leaveOnline(){
     var url = "https://api.counterapi.dev/v1/" + COUNTER_NS + "/" + ONLINE_KEY + "/down";
     try { fetch(url, { keepalive: true, cache: "no-store" }); } catch (e) {}
   }
-
   function refreshOnline(){
     var joined = false;
     try { joined = sessionStorage.getItem("sr_online_joined") === "1"; } catch (e) {}
-
     apiCounter(ONLINE_KEY, joined ? null : "up").then(function(n){
       if (n !== null){
         if (!joined){
@@ -1696,17 +1772,14 @@
       }
     });
   }
-
   function initCounters(){
     refreshTotal();
     refreshOnline();
-    setInterval(function(){
-      if (!document.hidden) refreshOnline();
-    }, 30000);
+    setInterval(function(){ if (!document.hidden) refreshOnline(); }, 30000);
   }
 
   /* =========================================================
-     19. START GAME
+     20. START GAME
      ========================================================= */
   function startGame(section){
     if (!SECTIONS[section]) { showHome(); return; }
@@ -1724,11 +1797,12 @@
     score = 0; streak = 0; best = 0;
 
     updateStats(false);
+    updateHistDisplays(false);
     startRound();
   }
 
   /* =========================================================
-     20. BOOT ROUTING
+     21. BOOT ROUTING
      ========================================================= */
   function route(){
     var target = parseHash();
@@ -1742,7 +1816,7 @@
   }
 
   /* =========================================================
-     21. SECTION GRID
+     22. SECTION GRID
      ========================================================= */
   function buildSectionGrid(){
     sectionGrid.innerHTML = "";
@@ -1752,16 +1826,13 @@
       card.className = "sectionCard";
 
       var icon = document.createElement("div");
-      icon.className = "secIcon";
-      icon.textContent = s.icon;
+      icon.className = "secIcon"; icon.textContent = s.icon;
 
       var title = document.createElement("div");
-      title.className = "secTitle";
-      title.textContent = s.label;
+      title.className = "secTitle"; title.textContent = s.label;
 
       var desc = document.createElement("div");
-      desc.className = "secDesc";
-      desc.innerHTML = s.desc;
+      desc.className = "secDesc"; desc.innerHTML = s.desc;
 
       var actions = document.createElement("div");
       actions.className = "secActions";
@@ -1791,7 +1862,7 @@
   }
 
   /* =========================================================
-     22. NAME ENTRY
+     23. NAME ENTRY
      ========================================================= */
   nameForm.addEventListener("submit", function(e){
     e.preventDefault();
@@ -1803,15 +1874,13 @@
 
     if (!f || f.length < 2){
       nameErr.textContent = "Please type your first name (at least 2 letters).";
-      firstName.classList.add("bad");
-      firstName.focus();
+      firstName.classList.add("bad"); firstName.focus();
       beep(220, 0.12, "square", 0.06);
       return;
     }
     if (!l || l.length < 2){
       nameErr.textContent = "Please type your last name (at least 2 letters).";
-      lastName.classList.add("bad");
-      lastName.focus();
+      lastName.classList.add("bad"); lastName.focus();
       beep(220, 0.12, "square", 0.06);
       return;
     }
@@ -1824,9 +1893,7 @@
       localStorage.setItem("sentenceRaceLastName", l);
     } catch (err) {}
 
-    audioCtx();
-    unlockSpeech();
-    sndClick();
+    audioCtx(); unlockSpeech(); sndClick();
 
     showOnly(avatarScreen);
     buildAvatarGrid();
@@ -1840,7 +1907,7 @@
   });
 
   /* =========================================================
-     23. AVATAR PICKER
+     24. AVATAR PICKER
      ========================================================= */
   function buildAvatarGrid(){
     avatarGrid.innerHTML = "";
@@ -1885,7 +1952,7 @@
   });
 
   /* =========================================================
-     24. GAME EVENT LISTENERS
+     25. GAME EVENT LISTENERS
      ========================================================= */
   checkBtn.addEventListener("click", check);
   clearBtn.addEventListener("click", clearMat);
@@ -1918,29 +1985,15 @@
     }
   });
 
-  /* --- Home buttons --- */
   byId("homeBtn").addEventListener("click", function(){ sndClick(); showHome(); });
   byId("achHomeBtn").addEventListener("click", function(){ sndClick(); showHome(); });
   byId("endHomeBtn").addEventListener("click", function(){ sndClick(); showHome(); });
 
-  /* --- Share buttons --- */
-  byId("shareBtn").addEventListener("click", function(){
-    sndClick();
-    doShare(currentSection());
-  });
-  byId("achShareBtn").addEventListener("click", function(){
-    sndClick();
-    doShare(currentMode);
-  });
-  byId("endShareBtn").addEventListener("click", function(){
-    sndClick();
-    doShare(currentMode);
-  });
+  byId("shareBtn").addEventListener("click", function(){ sndClick(); doShare(currentSection()); });
+  byId("achShareBtn").addEventListener("click", function(){ sndClick(); doShare(currentMode); });
+  byId("endShareBtn").addEventListener("click", function(){ sndClick(); doShare(currentMode); });
 
-  byId("againBtn").addEventListener("click", function(){
-    sndClick();
-    startGame(currentMode);
-  });
+  byId("againBtn").addEventListener("click", function(){ sndClick(); startGame(currentMode); });
 
   timerToggle.addEventListener("change", function(){
     if (timerToggle.checked){
@@ -1964,19 +2017,19 @@
     if (e.key === "Escape"){ clearMat(); }
   });
 
-  /* external hash change (pasted link in the same tab) */
   window.addEventListener("hashchange", function(){
     if (!profileReady) return;
     route();
   });
 
   /* =========================================================
-     25. BOOT
+     26. BOOT
      ========================================================= */
   buildSectionGrid();
+  loadHistorical();
+  updateHistDisplays(false);
   initCounters();
 
-  /* restore saved profile */
   try {
     var sf = localStorage.getItem("sentenceRaceFirstName");
     var sl = localStorage.getItem("sentenceRaceLastName");
@@ -1995,7 +2048,6 @@
   } catch (err) {}
 
   route();
-
   if (!profileReady) firstName.focus();
 
   window.addEventListener("error", function(e){
