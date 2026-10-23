@@ -52,7 +52,6 @@
     100%{opacity:0;transform:scale(1.35) translateY(-40px)}
   }
 
-  /* ===== penalty float ===== */
   .penaltyFloat{position:fixed;left:50%;top:46%;z-index:70;pointer-events:none;
     font-size:clamp(2.4rem,8vw,3.6rem);font-weight:900;color:#f87171;opacity:0;
     text-shadow:0 6px 24px rgba(0,0,0,.85),0 0 30px rgba(220,38,38,.55);
@@ -118,7 +117,6 @@
     box-shadow:0 0 0 3px rgba(59,130,246,.35);transform:scale(1.06)}
   #startGameWrap{max-width:440px;margin:0 auto}
 
-  /* ===== HOME HUB ===== */
   .profileChip{display:inline-flex;align-items:center;gap:10px;background:rgba(30,41,59,.85);
     border:1px solid #334155;border-radius:999px;padding:8px 18px 8px 12px;
     font-size:.95rem;color:#cbd5e1;flex-wrap:wrap;justify-content:center}
@@ -156,8 +154,8 @@
   @keyframes countPop{0%{transform:scale(1)}45%{transform:scale(1.22);color:#4ade80}100%{transform:scale(1)}}
   .counterLbl{font-size:.68rem;color:#94a3b8;text-transform:uppercase;letter-spacing:.07em;font-weight:700}
 
-  .sectionGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:780px;margin:0 auto}
-  @media(max-width:680px){.sectionGrid{grid-template-columns:1fr}}
+  .sectionGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;max-width:680px;margin:0 auto}
+  @media(max-width:640px){.sectionGrid{grid-template-columns:1fr}}
   .sectionCard{background:rgba(30,41,59,.85);border:2px solid #334155;border-radius:20px;
     padding:24px 16px;text-align:center;
     transition:transform .18s,border-color .18s,box-shadow .18s}
@@ -168,7 +166,6 @@
   .secDesc{font-size:.82rem;color:#94a3b8;margin-bottom:16px;line-height:1.55;min-height:2.6em}
   .secActions{display:flex;gap:8px;justify-content:center}
 
-  /* ===== GAME NAV BAR ===== */
   .navBar{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:12px}
   .navTitle{font-weight:800;font-size:.95rem;color:#cbd5e1;text-align:center;flex:1;
     overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -223,6 +220,7 @@
   .tierBadge.tier-4{background:linear-gradient(180deg,#ef4444,#dc2626)}
   .tierBadge.tier-desc{background:linear-gradient(180deg,#a855f7,#7c3aed)}
   .tierBadge.tier-pronoun{background:linear-gradient(180deg,#06b6d4,#0891b2)}
+  .tierBadge.tier-question{background:linear-gradient(180deg,#14b8a6,#0d9488)}
   .emoji{font-size:clamp(3rem,9vw,4rem);line-height:1.1;animation:wiggle 2.4s ease-in-out infinite}
   @keyframes wiggle{0%,100%{transform:rotate(-5deg) scale(1)}50%{transform:rotate(5deg) scale(1.08)}}
   .hint{margin:6px 0 10px;color:#cbd5e1;font-size:1rem;font-weight:600}
@@ -342,7 +340,7 @@
   <section id="startScreen" class="screen">
     <div class="logo">🏁</div>
     <h1>Sentence Race</h1>
-    <p class="sub">3 games • 200+ challenges • learn English by playing</p>
+    <p class="sub">4 games • 280+ challenges • learn English by playing</p>
 
     <form id="nameForm" class="nameForm" autocomplete="off" novalidate>
       <div class="nameRow">
@@ -708,7 +706,93 @@
   ];
 
   /* =========================================================
-     2. WORD TYPES
+     2. QUESTIONS BANK — 80 short questions
+     ========================================================= */
+  var QUESTION_BANK = [
+    ["🍕","Ask about pizza.","Do you like pizza"],
+    ["🐱","Ask about cats.","Do you like cats"],
+    ["🏊","Ask about swimming.","Can you swim"],
+    ["🎤","Ask about singing.","Can you sing"],
+    ["😊","Ask how they feel.","Are you happy"],
+    ["✅","Ask if they are ready.","Are you ready"],
+    ["☀️","Ask about the weather.","Is it hot"],
+    ["🧊","Ask about the weather.","Is it cold"],
+    ["🖊️","Ask about a pen.","Do you have a pen"],
+    ["🐶","Ask about a pet.","Do you have a dog"],
+    ["💃","Ask what she can do.","Can she dance"],
+    ["🏃","Ask what he can do.","Can he run"],
+    ["😄","Ask how she feels.","Is she happy"],
+    ["🧍","Ask about his height.","Is he tall"],
+    ["📍","Ask where they are.","Are they here"],
+    ["✅","Ask if you are all set.","Are we ready"],
+    ["🎒","Ask where your bag is.","Where is my bag"],
+    ["🐱","Ask where the cat is.","Where is the cat"],
+    ["📛","Ask for a name.","What is your name"],
+    ["👤","Ask who that is.","Who is that"],
+    ["🐶","Ask about the dog's size.","Is the dog big"],
+    ["🐱","Ask about the cat's size.","Is the cat small"],
+    ["💧","Ask about something to drink.","Do you want water"],
+    ["🧃","Ask about something to drink.","Do you want juice"],
+    ["🤝","Offer to help.","Can I help"],
+    ["⚽","Ask to play.","Can we play"],
+    ["😋","Ask if they are hungry.","Are you hungry"],
+    ["🥤","Ask if they are thirsty.","Are you thirsty"],
+    ["😴","Ask if they are tired.","Are you tired"],
+    ["⏰","Ask if something is ready.","Is it ready"],
+    ["🎮","Ask what they do.","Do they play"],
+    ["🎤","Ask what she does.","Does she sing"],
+    ["🏊","Ask what he does.","Does he swim"],
+    ["☀️","Ask about the sun.","Is the sun hot"],
+    ["🧊","Ask about the ice.","Is the ice cold"],
+    ["🏃","Ask what they can do.","Can they run"],
+    ["⏱️","Ask about time.","Do we have time"],
+    ["❓","Ask what this is.","What is this"],
+    ["❔","Ask what that is.","What is that"],
+    ["📍","Ask where you are.","Where are you"],
+    ["📍","Ask where they are.","Where are they"],
+    ["🏠","Ask if they are home.","Are you at home"],
+    ["🏠","Ask if mom is home.","Is mom home"],
+    ["🏠","Ask if dad is here.","Is dad here"],
+    ["⬆️","Ask about jumping.","Can you jump"],
+    ["💃","Ask about dancing.","Can you dance"],
+    ["🎵","Ask about music.","Do you like music"],
+    ["📚","Ask about books.","Do you like books"],
+    ["⚽","Ask about soccer.","Do you like soccer"],
+    ["🌤️","Ask about the sky.","Is the sky blue"],
+    ["⚽","Ask about the ball.","Is the ball round"],
+    ["🌳","Ask about the tree.","Is the tree tall"],
+    ["🚶","Ask to come.","Can I come"],
+    ["🪑","Ask to sit.","Can I sit"],
+    ["🚶","Ask to go.","Can I go"],
+    ["🐘","Ask about size.","Is it big"],
+    ["🐭","Ask about size.","Is it small"],
+    ["🍎","Ask about the color.","Is it red"],
+    ["🌊","Ask about the color.","Is it blue"],
+    ["🍚","Ask about eating rice.","Do you eat rice"],
+    ["🥛","Ask about drinking milk.","Do you drink milk"],
+    ["🎾","Ask about playing tennis.","Do you play tennis"],
+    ["💪","Ask if they are strong.","Are you strong"],
+    ["🏃","Ask if they are fast.","Are you fast"],
+    ["🙂","Ask if she is kind.","Is she kind"],
+    ["😂","Ask if he is funny.","Is he funny"],
+    ["👫","Ask if they are friends.","Are they friends"],
+    ["👍","Ask if they like it.","Do you like it"],
+    ["🙏","Ask if they want it.","Do you want it"],
+    ["🍳","Ask what he can do.","Can he cook"],
+    ["🍳","Ask what she can do.","Can she cook"],
+    ["🏠","Ask if mom is home.","Is your mom home"],
+    ["🏠","Ask if dad is home.","Is your dad home"],
+    ["🖊️","Ask where your pen is.","Where is my pen"],
+    ["📖","Ask where your book is.","Where is my book"],
+    ["👬","Ask who their friend is.","Who is your friend"],
+    ["🎒","Ask if the bag is theirs.","Is this your bag"],
+    ["🖊️","Ask if the pen is theirs.","Is this your pen"],
+    ["🤝","Ask for help.","Can you help me"],
+    ["👀","Ask if they can see you.","Can you see me"]
+  ];
+
+  /* =========================================================
+     3. WORD TYPES
      ========================================================= */
   var TYPE = {};
   function setType(list, type){
@@ -716,23 +800,23 @@
   }
   setType("i you he she it we they the my there do does this that please", "subj");
   setType(("like likes love loves eat eats have has see want play plays read reads drink drinks " +
-    "is are am can swim swims run runs jump jumps sing sings dance dances cook cooks fly flies " +
+    "is are am was were can swim swims run runs jump jumps sing sings dance dances cook cooks fly flies " +
     "walk walks go goes live lives sit sits sleep sleeps wash washes brush brushes help helps " +
     "come comes give gives thank write writes draw draws"), "verb");
   setType(("pizza apples apple cats cat dogs dog milk music books book soccer rice bread egg eggs " +
     "cake water juice candy tennis ball bird birds car tree trees star sun ice sky baby boy girl " +
-    "friends friend park school house chair bed hand hands tooth teeth tea coffee sister brother " +
+    "friends friend park school house home chair bed hand hands tooth teeth tea coffee sister brother " +
     "doll dolls game games food children kid kids mom dad morning night day garden kitchen cup " +
     "glass plate flower flowers teacher time year store pool gift " +
     "banana balloon elephant giraffe zebra penguin whale dolphin shark octopus crab bee ant spider " +
     "sunflower rose palm cactus leaf wave mountain volcano beach rainbow rain snow wind fire rock " +
-    "log window door sofa mirror watch phone laptop camera guitar drum trumpet painting pen snail " +
+    "log window door sofa mirror watch phone laptop camera guitar drum trumpet painting pen bag snail " +
     "hedgehog squirrel chicken cow pig sheep goat duck owl eagle snake turtle lion mouse bear " +
     "rabbit frog butterfly donut cookie chocolate grapes strawberry orange carrot broccoli corn " +
     "cheese coffee"), "noun");
   setType(("big small soft black white red blue green brown pink hot cold warm happy sad tired " +
     "funny hungry thirsty ready tall short kind cute round many two three some every very high " +
-    "fast well now today good nice strong smart here " +
+    "fast well now today good nice strong smart here okay " +
     "yellow bright shiny old pretty sweet purple juicy wise long striped heavy wooden clean " +
     "new loud slow sandy colorful quiet"), "adj");
   setType("and with of for at in on to from under over", "adj");
@@ -758,22 +842,29 @@
   var PRONOUN_DECOYS = ("i you he she it we they am is are can like run swim sing play jump cook " +
     "dance big small tall short happy sad kind funny smart hot cold red blue fast strong tired " +
     "hungry ready nice here good").split(" ");
+  var QUESTION_DECOYS = ("do does can is are was what where who why how when " +
+    "i you he she it we they the a my your this that " +
+    "not very like want need have see eat drink play read run swim sing dance " +
+    "big small hot cold happy sad tall short kind funny fast strong tired hungry " +
+    "red blue green dog cat ball book pen bag car tree sun ice water tea " +
+    "here there home").split(" ");
 
   var AVATARS = ["🦊","🐼","🐸","🦁","🐯","🐨","🐵","🐧","🦄","🐙","🦖","🐝"];
   var ROUND_SECONDS = 45;
-  var PENALTY = 5;                 /* points lost on a wrong answer */
+  var PENALTY = 5;
 
   /* =========================================================
-     3. SECTIONS
+     4. SECTIONS
      ========================================================= */
   var SECTIONS = {
-    race:     { label: "Sentence Race", icon: "🔤", desc: "4 levels • 60 rounds<br>Sentences from 3 to 6 words", build: buildRaceLevels },
-    desc:     { label: "Description",   icon: "🎨", desc: "5 sets • 100 pictures<br>Describe in exactly 2 words", build: buildDescriptionLevels },
-    pronouns: { label: "Pronouns",      icon: "👤", desc: "2 sets • 40 sentences<br>I, you, he, she, it, we, they", build: buildPronounLevels }
+    race:      { label: "Sentence Race", icon: "🔤", desc: "4 levels • 60 rounds<br>Sentences from 3 to 6 words",     build: buildRaceLevels },
+    desc:      { label: "Description",   icon: "🎨", desc: "5 sets • 100 pictures<br>Describe in exactly 2 words",    build: buildDescriptionLevels },
+    pronouns:  { label: "Pronouns",      icon: "👤", desc: "2 sets • 40 sentences<br>I, you, he, she, it, we, they",    build: buildPronounLevels },
+    questions: { label: "Questions",     icon: "❓", desc: "4 sets • 80 questions<br>Do you…? Can you…? Is it…?",      build: buildQuestionLevels }
   };
 
   /* =========================================================
-     4. DOM
+     5. DOM
      ========================================================= */
   function byId(id){ return document.getElementById(id); }
 
@@ -838,7 +929,7 @@
   var endAvatarEl = byId("endAvatar");
 
   /* =========================================================
-     5. STATE
+     6. STATE
      ========================================================= */
   var player = "";
   var avatar = "";
@@ -855,58 +946,40 @@
   var pendingSection = null;
 
   /* =========================================================
-     6. HISTORICAL POINTS (persisted in localStorage)
+     7. HISTORICAL POINTS
      ========================================================= */
   function loadHistorical(){
     try { historicalPoints = parseInt(localStorage.getItem("sr_historical_points") || "0", 10) || 0; }
     catch (e) { historicalPoints = 0; }
   }
-
   function awardHistorical(pts){
     historicalPoints += pts;
-    try { localStorage.setItem("sr_historical_points", String(historicalPoints)); }
-    catch (e) {}
+    try { localStorage.setItem("sr_historical_points", String(historicalPoints)); } catch (e) {}
     updateHistDisplays(true, false);
   }
-
   function deductHistorical(pts){
     historicalPoints = Math.max(0, historicalPoints - pts);
-    try { localStorage.setItem("sr_historical_points", String(historicalPoints)); }
-    catch (e) {}
+    try { localStorage.setItem("sr_historical_points", String(historicalPoints)); } catch (e) {}
     updateHistDisplays(true, true);
   }
-
   function updateHistDisplays(animate, isPenalty){
     var fmt = historicalPoints.toLocaleString();
     var cls = isPenalty ? "penalty" : "bump";
 
-    var hh = byId("homeHistPoints");
-    var hp = byId("homeHistPill");
+    var hh = byId("homeHistPoints"); var hp = byId("homeHistPill");
     if (hh) hh.textContent = fmt;
-    if (hp && animate){
-      hp.classList.remove("bump", "penalty");
-      void hp.offsetWidth;
-      hp.classList.add(cls);
-    }
+    if (hp && animate){ hp.classList.remove("bump","penalty"); void hp.offsetWidth; hp.classList.add(cls); }
 
-    var gh = byId("gameHistPoints");
-    var gp = byId("gameHistPill");
+    var gh = byId("gameHistPoints"); var gp = byId("gameHistPill");
     if (gh) gh.textContent = fmt;
-    if (gp && animate){
-      gp.classList.remove("bump", "penalty");
-      void gp.offsetWidth;
-      gp.classList.add(cls);
-    }
+    if (gp && animate){ gp.classList.remove("bump","penalty"); void gp.offsetWidth; gp.classList.add(cls); }
 
-    var ah = byId("achHistPoints");
-    if (ah) ah.textContent = fmt;
-
-    var eh = byId("endHistPoints");
-    if (eh) eh.textContent = fmt;
+    var ah = byId("achHistPoints"); if (ah) ah.textContent = fmt;
+    var eh = byId("endHistPoints"); if (eh) eh.textContent = fmt;
   }
 
   /* =========================================================
-     7. SPEECH
+     8. SPEECH
      ========================================================= */
   var voices = [];
   var speechOK = false;
@@ -917,8 +990,7 @@
 
   function loadVoices(){
     if (!speechOK) return;
-    try { voices = window.speechSynthesis.getVoices() || []; }
-    catch (e) { voices = []; }
+    try { voices = window.speechSynthesis.getVoices() || []; } catch (e) { voices = []; }
   }
   if (speechOK){
     loadVoices();
@@ -934,9 +1006,7 @@
       function(x){ return /^en/i.test(x.lang); }
     ];
     for (var p = 0; p < prefs.length; p++){
-      for (var i = 0; i < voices.length; i++){
-        if (prefs[p](voices[i])) return voices[i];
-      }
+      for (var i = 0; i < voices.length; i++){ if (prefs[p](voices[i])) return voices[i]; }
     }
     return null;
   }
@@ -957,22 +1027,16 @@
   }
   function unlockSpeech(){
     if (!speechOK) return;
-    try {
-      var u = new SpeechSynthesisUtterance(" "); u.volume = 0;
-      window.speechSynthesis.speak(u);
-    } catch (e) {}
+    try { var u = new SpeechSynthesisUtterance(" "); u.volume = 0; window.speechSynthesis.speak(u); } catch (e) {}
   }
 
   /* =========================================================
-     8. SOUND EFFECTS
+     9. SOUND EFFECTS
      ========================================================= */
   var actx = null;
   function audioCtx(){
     try {
-      if (!actx){
-        var AC = window.AudioContext || window.webkitAudioContext;
-        if (AC) actx = new AC();
-      }
+      if (!actx){ var AC = window.AudioContext || window.webkitAudioContext; if (AC) actx = new AC(); }
       if (actx && actx.state === "suspended") actx.resume();
       return actx;
     } catch (e) { return null; }
@@ -1013,7 +1077,7 @@
   }
 
   /* =========================================================
-     9. CONFETTI + SHAPES
+     10. CONFETTI + SHAPES
      ========================================================= */
   var parts = [], raf = null;
   function sizeCanvas(){
@@ -1049,12 +1113,9 @@
     for (var i = parts.length - 1; i >= 0; i--){
       var p = parts[i];
       p.vy += p.g; p.x += p.vx; p.y += p.vy; p.vx *= 0.994; p.rot += p.vr;
-      if (p.y > confCanvas.height + 60 || p.x < -80 || p.x > confCanvas.width + 80){
-        parts.splice(i, 1); continue;
-      }
+      if (p.y > confCanvas.height + 60 || p.x < -80 || p.x > confCanvas.width + 80){ parts.splice(i, 1); continue; }
       confCtx.save();
-      confCtx.translate(p.x, p.y);
-      confCtx.rotate(p.rot);
+      confCtx.translate(p.x, p.y); confCtx.rotate(p.rot);
       confCtx.fillStyle = p.color;
       confCtx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size * 0.62);
       confCtx.restore();
@@ -1075,10 +1136,8 @@
       el.className = "shape " + SHAPE_KINDS[i % SHAPE_KINDS.length];
       el.style.background = SHAPE_COLORS[(i * 3 + ((Math.random() * 10) | 0)) % SHAPE_COLORS.length];
       var size = 14 + Math.random() * 20;
-      el.style.width  = size + "px";
-      el.style.height = size + "px";
-      el.style.left = cx + "px";
-      el.style.top  = cy + "px";
+      el.style.width  = size + "px"; el.style.height = size + "px";
+      el.style.left = cx + "px"; el.style.top  = cy + "px";
       var angle = (Math.PI * 2 * i) / count + (Math.random() - 0.5) * 0.5;
       var dist  = 130 + Math.random() * 190;
       el.style.setProperty("--dx", Math.round(Math.cos(angle) * dist) + "px");
@@ -1093,7 +1152,7 @@
   }
 
   /* =========================================================
-     10. REACTION + PENALTY FLOAT + TOAST
+     11. REACTION + PENALTY + TOAST
      ========================================================= */
   function react(emoji){
     reactionEl.classList.remove("show");
@@ -1101,7 +1160,6 @@
     reactionEl.textContent = emoji;
     reactionEl.classList.add("show");
   }
-
   function showPenaltyFloat(pts){
     if (!penaltyEl) return;
     penaltyEl.textContent = "−" + pts + " pts";
@@ -1109,11 +1167,9 @@
     void penaltyEl.offsetWidth;
     penaltyEl.classList.add("show");
   }
-
   function showToast(msg){
     var t = document.createElement("div");
-    t.className = "toast";
-    t.textContent = msg;
+    t.className = "toast"; t.textContent = msg;
     document.body.appendChild(t);
     requestAnimationFrame(function(){ t.classList.add("show"); });
     setTimeout(function(){ t.classList.remove("show"); }, 2500);
@@ -1121,7 +1177,7 @@
   }
 
   /* =========================================================
-     11. HELPERS
+     12. HELPERS
      ========================================================= */
   function norm(w){ return String(w).toLowerCase().replace(/[.,!?]/g, ""); }
   function shuffle(a){
@@ -1166,9 +1222,16 @@
     shuffle(cands);
     return cands.slice(0, 3);
   }
+  function pickQuestionDecoys(answerWords){
+    var used = {};
+    answerWords.forEach(function(w){ used[w.toLowerCase()] = true; });
+    var cands = QUESTION_DECOYS.filter(function(w){ return !used[w.toLowerCase()]; });
+    shuffle(cands);
+    return cands.slice(0, 3);
+  }
 
   /* =========================================================
-     12. LEVEL BUILDERS
+     13. LEVEL BUILDERS
      ========================================================= */
   function buildRaceLevels(){
     var cfgList = [
@@ -1196,10 +1259,7 @@
       var chunk = shuffled.slice(s * perSet, (s + 1) * perSet);
       var rounds = chunk.map(function(item){
         var answerWords = item[1].split(" ");
-        return {
-          emoji: item[0], hint: "Describe the picture in two words.",
-          answer: answerWords, decoys: pickDescDecoys(answerWords)
-        };
+        return { emoji: item[0], hint: "Describe the picture in two words.", answer: answerWords, decoys: pickDescDecoys(answerWords) };
       });
       levels.push({ levelName: "Set " + (s + 1), tierName: "2 words", tierClass: "tier-desc", rounds: rounds });
     }
@@ -1221,8 +1281,23 @@
     return levels;
   }
 
+  function buildQuestionLevels(){
+    var shuffled = shuffle(QUESTION_BANK.slice());
+    var sets = 4, perSet = 20;
+    var levels = [];
+    for (var s = 0; s < sets; s++){
+      var chunk = shuffled.slice(s * perSet, (s + 1) * perSet);
+      var rounds = chunk.map(function(row){
+        var answerWords = row[2].split(" ");
+        return { emoji: row[0], hint: row[1], answer: answerWords, decoys: pickQuestionDecoys(answerWords) };
+      });
+      levels.push({ levelName: "Set " + (s + 1), tierName: "Questions", tierClass: "tier-question", rounds: rounds });
+    }
+    return levels;
+  }
+
   /* =========================================================
-     13. RENDER
+     14. RENDER
      ========================================================= */
   function cardEl(card, onMat, index){
     var btn = document.createElement("button");
@@ -1270,7 +1345,7 @@
   }
 
   /* =========================================================
-     14. ACTIONS
+     15. ACTIONS
      ========================================================= */
   function addCard(id){
     if (locked) return;
@@ -1333,7 +1408,7 @@
     var targetNorm  = current.answer.map(norm).join(" ");
 
     if (attemptNorm === targetNorm){
-      /* ===== CORRECT — gain points ===== */
+      /* ---------- CORRECT ---------- */
       locked = true;
       streak++;
       if (streak > best) best = streak;
@@ -1368,18 +1443,16 @@
       else setTimeout(startRound, 1500);
 
     } else {
-      /* ===== WRONG — LOSE POINTS ===== */
+      /* ---------- WRONG ---------- */
       streak = 0;
       score = Math.max(0, score - PENALTY);
       deductHistorical(PENALTY);
 
       updateStats(false);
-      /* flash the score pill in red */
       scoreLabel.classList.remove("bump", "penalty");
       void scoreLabel.offsetWidth;
       scoreLabel.classList.add("penalty");
 
-      /* floating −N pts */
       showPenaltyFloat(PENALTY);
 
       sndBad();
@@ -1396,15 +1469,13 @@
   }
 
   /* =========================================================
-     15. ROUND / LEVEL FLOW
+     16. ROUND / LEVEL FLOW
      ========================================================= */
   function startRound(){
     stopTimer();
     var level = gameLevels[levelIdx];
     current = level.rounds[roundIdx];
-    placed = [];
-    locked = false;
-    justAdded = -1;
+    placed = []; locked = false; justAdded = -1;
 
     feedbackEl.textContent = "";
     feedbackEl.className = "feedback";
@@ -1495,7 +1566,7 @@
   }
 
   /* =========================================================
-     16. TIMER
+     17. TIMER
      ========================================================= */
   function startTimer(){
     stopTimer();
@@ -1523,14 +1594,13 @@
   }
 
   /* =========================================================
-     17. CAPTURE ACHIEVEMENT
+     18. CAPTURE ACHIEVEMENT
      ========================================================= */
   function captureAchievement(){
     var level = gameLevels[levelIdx];
 
     var canvas = document.createElement("canvas");
-    canvas.width  = 1000;
-    canvas.height = 1300;
+    canvas.width  = 1000; canvas.height = 1300;
     var c = canvas.getContext("2d");
 
     var grad = c.createLinearGradient(0, 0, 0, canvas.height);
@@ -1551,8 +1621,7 @@
     c.lineWidth = 6;
     c.strokeRect(30, 30, canvas.width - 60, canvas.height - 60);
 
-    c.textAlign = "center";
-    c.textBaseline = "middle";
+    c.textAlign = "center"; c.textBaseline = "middle";
 
     c.font = "180px serif";
     c.fillText("🏆", canvas.width/2, 260);
@@ -1620,7 +1689,7 @@
   }
 
   /* =========================================================
-     18. ROUTING / HOME / SHARE
+     19. ROUTING / HOME / SHARE
      ========================================================= */
   function showOnly(el){
     [startScreen, avatarScreen, homeScreen, gameScreen, achieveScreen, endScreen]
@@ -1638,8 +1707,7 @@
     catch (e) { location.hash = section; }
   }
   function showHome(){
-    stopTimer();
-    stopSpeech();
+    stopTimer(); stopSpeech();
     setHash("home");
     showOnly(homeScreen);
     homeAvatar.textContent = avatar || "🦊";
@@ -1651,9 +1719,7 @@
     setHash(section);
     startGame(section);
   }
-  function shareUrl(section){
-    return location.href.split("#")[0] + "#" + section;
-  }
+  function shareUrl(section){ return location.href.split("#")[0] + "#" + section; }
   function fallbackCopy(text){
     try {
       var ta = document.createElement("textarea");
@@ -1692,7 +1758,7 @@
   }
 
   /* =========================================================
-     19. VISITOR COUNTERS
+     20. VISITOR COUNTERS
      ========================================================= */
   var COUNTER_NS = "sentence-race-esl-app";
   var TOTAL_KEY  = "total-visitors";
@@ -1713,9 +1779,7 @@
             resolve(d && typeof d.count === "number" ? d.count : null);
           })
           .catch(function(){ if (!done){ done = true; clearTimeout(timer); resolve(null); } });
-      } catch (e){
-        if (!done){ done = true; clearTimeout(timer); resolve(null); }
-      }
+      } catch (e){ if (!done){ done = true; clearTimeout(timer); resolve(null); } }
     });
   }
   function setCounter(id, val, note){
@@ -1744,9 +1808,7 @@
     var shouldHit = (now - last) > (30 * 60 * 1000);
     apiCounter(TOTAL_KEY, shouldHit ? "up" : null).then(function(n){
       if (n !== null){
-        if (shouldHit){
-          try { localStorage.setItem("sr_total_hit", String(now)); } catch (e) {}
-        }
+        if (shouldHit){ try { localStorage.setItem("sr_total_hit", String(now)); } catch (e) {} }
         setCounter("totalCount", n);
       } else {
         setCounter("totalCount", localTotal(), "Local count — online counter unreachable");
@@ -1779,7 +1841,7 @@
   }
 
   /* =========================================================
-     20. START GAME
+     21. START GAME
      ========================================================= */
   function startGame(section){
     if (!SECTIONS[section]) { showHome(); return; }
@@ -1802,7 +1864,7 @@
   }
 
   /* =========================================================
-     21. BOOT ROUTING
+     22. BOOT ROUTING
      ========================================================= */
   function route(){
     var target = parseHash();
@@ -1816,7 +1878,7 @@
   }
 
   /* =========================================================
-     22. SECTION GRID
+     23. SECTION GRID
      ========================================================= */
   function buildSectionGrid(){
     sectionGrid.innerHTML = "";
@@ -1862,7 +1924,7 @@
   }
 
   /* =========================================================
-     23. NAME ENTRY
+     24. NAME ENTRY
      ========================================================= */
   nameForm.addEventListener("submit", function(e){
     e.preventDefault();
@@ -1907,7 +1969,7 @@
   });
 
   /* =========================================================
-     24. AVATAR PICKER
+     25. AVATAR PICKER
      ========================================================= */
   function buildAvatarGrid(){
     avatarGrid.innerHTML = "";
@@ -1952,7 +2014,7 @@
   });
 
   /* =========================================================
-     25. GAME EVENT LISTENERS
+     26. GAME EVENT LISTENERS
      ========================================================= */
   checkBtn.addEventListener("click", check);
   clearBtn.addEventListener("click", clearMat);
@@ -1962,7 +2024,6 @@
     sndClick();
     if (current) speak(current.hint, 0.88);
   });
-
   hintBtn.addEventListener("click", function(){
     sndClick();
     if (current) speak(current.answer.join(" "), 0.85);
@@ -2023,7 +2084,7 @@
   });
 
   /* =========================================================
-     26. BOOT
+     27. BOOT
      ========================================================= */
   buildSectionGrid();
   loadHistorical();
